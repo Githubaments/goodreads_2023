@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import gender_guesser.detector as gender
-import matplotlib.pyplot as plt
+import plotly.express as px
 
 # Load data
 def load_data(file):
@@ -38,25 +38,16 @@ if uploaded_file is not None:
     st.bar_chart(ratings_count)
 
     st.write('### Average Rating of Books')
-    fig, ax = plt.subplots()
-    ax.bar(data.index, data['Average Rating'])
-    ax.set_xlabel('Book Index')
-    ax.set_ylabel('Average Rating')
-    st.pyplot(fig)
+    fig = px.bar(data, x=data.index, y='Average Rating', labels={'x': 'Book Index', 'y': 'Average Rating'})
+    st.plotly_chart(fig)
 
     st.write('### Scatter Plot: Length vs. Average Rating')
-    fig, ax = plt.subplots()
-    ax.scatter(data['Number of Pages'], data['Average Rating'], alpha=0.5)
-    ax.set_xlabel('Number of Pages')
-    ax.set_ylabel('Average Rating')
-    st.pyplot(fig)
+    fig = px.scatter(data, x='Number of Pages', y='Average Rating', labels={'x': 'Number of Pages', 'y': 'Average Rating'})
+    st.plotly_chart(fig)
 
     st.write('### Scatter Plot: Original Publication Year vs. Average Rating')
-    fig, ax = plt.subplots()
-    ax.scatter(data['Original Publication Year'], data['Average Rating'], alpha=0.5)
-    ax.set_xlabel('Original Publication Year')
-    ax.set_ylabel('Average Rating')
-    st.pyplot(fig)
+    fig = px.scatter(data, x='Original Publication Year', y='Average Rating', labels={'x': 'Original Publication Year', 'y': 'Average Rating'})
+    st.plotly_chart(fig)
 
     st.write('### Gender Analysis of Authors')
     data['Gender'] = data['Author'].apply(get_gender)
