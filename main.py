@@ -48,13 +48,13 @@ if uploaded_file is not None:
     fig = px.scatter(data_since_1500, x='Original Publication Year', y='Average Rating', hover_name='Title', labels={'x': 'Original Publication Year', 'y': 'Average Rating'})
     st.plotly_chart(fig)
 
-    st.write('### Scatter Plot: Original Publication Year (last 100 years) vs. Average Rating')
-    data_last_100_years = data[data['Original Publication Year'] >= (pd.Timestamp.now().year - 100)]
+    st.write('### Scatter Plot: Original Publication Year (Since 1900) vs. Average Rating')
+    data_last_100_years = data[data['Original Publication Year'] >= 1900]
     fig = px.scatter(data_last_100_years, x='Original Publication Year', y='Average Rating', hover_name='Title', labels={'x': 'Original Publication Year', 'y': 'Average Rating'}, size=data_last_100_years.groupby(['Original Publication Year', 'Average Rating']).transform('count'))
     st.plotly_chart(fig)
 
-    st.write('### Scatter Plot: Original Publication Year (last 20 years) vs. Average Rating')
-    data_last_20_years = data[data['Original Publication Year'] >= (pd.Timestamp.now().year - 20)]
+    st.write('### Scatter Plot: Original Publication Year (Since 2000) vs. Average Rating')
+    data_last_20_years = data[data['Original Publication Year'] >= 2000]
     fig = px.scatter(data_last_20_years, x='Original Publication Year', y='Average Rating', hover_name='Title', labels={'x': 'Original Publication Year', 'y': 'Average Rating'}, size=data_last_20_years.groupby(['Original Publication Year', 'Average Rating']).transform('count'))
     st.plotly_chart(fig)
     
