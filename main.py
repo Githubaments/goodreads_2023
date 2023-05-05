@@ -50,12 +50,12 @@ if uploaded_file is not None:
 
     st.write('### Scatter Plot: Original Publication Year (Since 1900) vs. Average Rating')
     data_last_100_years = data[data['Original Publication Year'] >= 1900]
-    fig = px.scatter(data_last_100_years, x='Original Publication Year', y='Average Rating', hover_name='Title', labels={'x': 'Original Publication Year', 'y': 'Average Rating'}, size=data_last_100_years.groupby(['Original Publication Year', 'Average Rating']).transform('count'))
+    fig = px.scatter(data_last_100_years, x='Original Publication Year', y='Average Rating', hover_name='Title', labels={'x': 'Original Publication Year', 'y': 'Average Rating'})
     st.plotly_chart(fig)
 
     st.write('### Scatter Plot: Original Publication Year (Since 2000) vs. Average Rating')
     data_last_20_years = data[data['Original Publication Year'] >= 2000]
-    fig = px.scatter(data_last_20_years, x='Original Publication Year', y='Average Rating', hover_name='Title', labels={'x': 'Original Publication Year', 'y': 'Average Rating'}, size=data_last_20_years.groupby(['Original Publication Year', 'Average Rating']).transform('count'))
+    fig = px.scatter(data_last_20_years, x='Original Publication Year', y='Average Rating', hover_name='Title', labels={'x': 'Original Publication Year', 'y': 'Average Rating'})
     st.plotly_chart(fig)
     
     st.write('### Pages Read Per Year')
