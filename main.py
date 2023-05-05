@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import gender_guesser.detector as gender
+import matplotlib.pyplot as plt
 
 # Load data
 def load_data(file):
@@ -37,13 +38,25 @@ if uploaded_file is not None:
     st.bar_chart(ratings_count)
 
     st.write('### Average Rating of Books')
-    st.write(f"Average rating: {data['Average Rating'].mean():.2f}")
+    fig, ax = plt.subplots()
+    ax.bar(data.index, data['Average Rating'])
+    ax.set_xlabel('Book Index')
+    ax.set_ylabel('Average Rating')
+    st.pyplot(fig)
 
-    st.write('### Average Length of Books')
-    st.write(f"Average number of pages: {data['Number of Pages'].mean():.0f}")
+    st.write('### Scatter Plot: Length vs. Average Rating')
+    fig, ax = plt.subplots()
+    ax.scatter(data['Number of Pages'], data['Average Rating'], alpha=0.5)
+    ax.set_xlabel('Number of Pages')
+    ax.set_ylabel('Average Rating')
+    st.pyplot(fig)
 
-    st.write('### Average Original Publication Year')
-    st.write(f"Average original publication year: {data['Original Publication Year'].mean():.0f}")
+    st.write('### Scatter Plot: Original Publication Year vs. Average Rating')
+    fig, ax = plt.subplots()
+    ax.scatter(data['Original Publication Year'], data['Average Rating'], alpha=0.5)
+    ax.set_xlabel('Original Publication Year')
+    ax.set_ylabel('Average Rating')
+    st.pyplot(fig)
 
     st.write('### Gender Analysis of Authors')
     data['Gender'] = data['Author'].apply(get_gender)
