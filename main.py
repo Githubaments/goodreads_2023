@@ -69,16 +69,13 @@ if uploaded_file is not None:
     pages_read_by_year = data.groupby('Year Read')['Number of Pages'].sum().dropna()
     st.bar_chart(pages_read_by_year)
 
+
     st.write('### Pages Read Per Year (including Unknown)')
     data['Year Read'] = data['Date Read'].dt.year
-    pages_read_by_year = data.groupby('Year Read')['Number of Pages'].sum().dropna().reset_index()
+    data['Year Read'] = data['Year Read'].fillna(0)  # Replace NaN values with 0
+    pages_read_by_year = data.groupby('Year Read')['Number of Pages'].sum()
 
-    # Add the unknown category to the chart
-    unknown_year_pages = data[data['Original Publication Year'].isna()]['Number of Pages'].sum()
-    unknown_data = pd.DataFrame({'Year Read': ['Unknown'], 'Number of Pages': [unknown_year_pages]})
-    pages_read_by_year_with_unknown = pages_read_by_year.append(unknown_data, ignore_index=True)
-
-    st.bar_chart(pages_read_by_year_with_unknown.set_index('Year Read'))
+    st.bar_chart(pages_read_by_year)
     
     st.write('### Gender Analysis of Authors (Percentage)')
     data['Gender'] = data['Author'].apply(get_gender)
