@@ -42,6 +42,12 @@ if uploaded_file is not None:
     st.write('### Scatter Plot: Length vs. Average Rating')
     fig = px.scatter(data, x='Number of Pages', y='Average Rating', hover_name='Title', labels={'x': 'Number of Pages', 'y': 'Average Rating'})
     st.plotly_chart(fig)
+    
+    st.write('### Scatter Plot: Original Publication Year vs. Average Rating')
+    fig = px.scatter(data, x='Original Publication Year', y='Average Rating', hover_name='Title', labels={'x': 'Original Publication Year', 'y': 'Average Rating'})
+    st.plotly_chart(fig)
+
+    
 
     st.write('### Scatter Plot: Original Publication Year (since 1500) vs. Average Rating')
     data_since_1500 = data[data['Original Publication Year'] >= 1500]
@@ -63,10 +69,15 @@ if uploaded_file is not None:
     pages_read_by_year = data.groupby('Year Read')['Number of Pages'].sum().dropna()
     st.bar_chart(pages_read_by_year)
 
-    st.write('### Total Pages for Books with Unknown Publication Year')
+    st.write('### Pages Read Per Year (including Unknown)')
+    data['Year Read'] = data['Date Read'].dt.year
+    pages_read_by_year = data.groupby('Year Read')['Number of Pages'].sum().dropna()
+
+    # Add the unknown category to the chart
     unknown_year_pages = data[data['Original Publication Year'].isna()]['Number of Pages'].sum()
-    st.write(f"Total Pages: {unknown_year_pages}")
-    
+    pages_read_by_year_with_unknown = pages_read_by_year.append(pd.Series([unknown_year_pages], index=['Unknown']))
+
+    st.bar_chart(pages_read_by_year_with_unknown)
     
     st.write('### Gender Analysis of Authors (Percentage)')
     data['Gender'] = data['Author'].apply(get_gender)
